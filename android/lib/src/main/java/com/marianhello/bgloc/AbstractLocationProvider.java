@@ -49,10 +49,13 @@ public abstract class AbstractLocationProvider implements LocationProvider {
     }
 
     public void onCreate() {
-        toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
+        try {
+            toneGenerator = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
+        } catch (Throwable t) {}
     }
 
     public void onDestroy() {
+        if (toneGenerator == null) return;
         toneGenerator.release();
         toneGenerator = null;
     }
